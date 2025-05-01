@@ -30,7 +30,7 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
             <a class=" text-sky-300 text-xs" href="/"> Regresar </a>
             <h1 class="text-2xl text-center mb-2">{name}</h1>
         </div>
-        <PokemonCard name={name} url={url}/>
+        <PokemonCard name={name} url={url} isBig/>
         <audio controls class="mt-5">
             <source src={audioSrc} type="audio/ogg"/>
         </audio>
