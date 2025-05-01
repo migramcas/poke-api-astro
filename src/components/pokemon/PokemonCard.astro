@@ -1,0 +1,21 @@
+---
+interface Props {
+    name:string;
+    url: string;
+}
+
+const {name, url} = Astro.props;
+const id = url.split("/").at(-2);
+const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`
+---
+
+<a
+        href={`/pokemons/${name}`}
+        class="border p-3 rounded flex flex-col justify-center items-center">
+    <img
+            transition:name={`${name}-image`}
+            src={imageSrc}
+            alt=`Pokemon ${name}`
+    />
+    <p class="capitalize">{name}</p>
+</a>

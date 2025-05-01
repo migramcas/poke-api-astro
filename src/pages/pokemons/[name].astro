@@ -1,0 +1,38 @@
+---
+import type {GetStaticPaths} from 'astro';
+import MainLayout from "../../layout/MainLayout.astro";
+import PokemonCard from "../../components/pokemon/PokemonCard.astro";
+import {PokemonListResponse} from "../../interfces/pokemon-list-response";
+
+export const getStaticPaths = (async () => {
+    const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    const {results} = await resp.json() as PokemonListResponse;
+
+    console.log({results})
+
+    return results.map((route) => ({
+        params: {name: route.name},
+        props: {name: route.name, url: route.url}
+    }));
+}) satisfies GetStaticPaths;
+
+const {name} = Astro.params;
+const {url} = Astro.props;
+
+const id = url.split("/").at(-2);
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+---
+
+
+<MainLayout title="Pokemon genérico">
+    <section class="mt-10 mx-10 flex flex-col justify-center items-center">
+        <div class="mb-3">
+            <a class=" text-sky-300 text-xs" href="/"> Regresar </a>
+            <h1 class="text-2xl text-center mb-2">{name}</h1>
+        </div>
+        <PokemonCard name={name} url={url}/>
+        <audio controls class="mt-5">
+            <source src={audioSrc} type="audio/ogg"/>
+        </audio>
+    </section>
+</MainLayout>
